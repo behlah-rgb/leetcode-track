@@ -1,14 +1,19 @@
 class Solution {
     public List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> subsets = new ArrayList<>();
-        List<Integer> subset = new ArrayList<>();
-        for (int i = 0; i < Math.pow(2, nums.length); i++) {
-            for (int j = 0; j < nums.length; j++){
-                if ((i & (1 << j)) != 0)
+        int n = nums.length;
+        int totalSubsets = 1 << n; // 2^n
+        
+        // Pre-allocate exact list capacities to avoid dynamic resizing
+        List<List<Integer>> subsets = new ArrayList<>(totalSubsets);
+
+        for (int i = 0; i < totalSubsets; i++) {
+            List<Integer> subset = new ArrayList<>(Integer.bitCount(i));
+            for (int j = 0; j < n; j++) {
+                if ((i & (1 << j)) != 0) {
                     subset.add(nums[j]);
+                }
             }
-            subsets.add(new ArrayList<>(subset));
-            subset.clear();
+            subsets.add(subset);
         }
         return subsets;
     }
