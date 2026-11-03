@@ -1,0 +1,17 @@
+class Solution {
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        int[][] ans = new int[n][n];
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                ans[i][j] = matrix[n - 1 - j][i];
+            }
+        }
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                matrix[i][j] = ans[i][j];
+            }
+        }
+    }
+}
