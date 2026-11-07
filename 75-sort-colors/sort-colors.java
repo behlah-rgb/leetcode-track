@@ -1,35 +1,13 @@
 class Solution {
     public void sortColors(int[] nums) {
-        int left = 0, right = 1;
-        while (left  < right && right < nums.length) {
-            if (nums[left] < nums[right]) {
-                if (nums[left] == 1 && nums[right] == 2) right++;
-                else { if (right - left == 1)
-                {left++; right++;} else left++;}
-            } else if (nums[left] == nums[right]) right++;
-            else {
-                if (nums[left] == 2 && nums[right] == 1) right++;
-                else {
-                    int temp = nums[right];
-                    nums[right] = nums[left];
-                    nums[left] = temp;
-                    left++; right++;
-                }
-            }
+        int cnt0 = 0, cnt1 = 0, cnt2 = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0) cnt0++;
+            else if (nums[i] == 1) cnt1++;
+            else cnt2++;
         }
-
-        right = left + 1;
-        while (left < right && right < nums.length) {
-            if (nums[left] < nums[right]) {
-                if (right - left == 1)
-                {left++; right++;} else left++;
-            } else if (nums[left] == nums[right]) right++;
-            else {
-                int temp = nums[right];
-                nums[right] = nums[left];
-                nums[left] = temp;
-                left++; right++;
-            }
-        }
+        for (int i = 0; i < cnt0; i++) nums[i] = 0;
+        for (int i = cnt0; i < cnt0 + cnt1; i++) nums[i] = 1;
+        for (int i = cnt0 + cnt1; i < nums.length; i++) nums[i] = 2;
     }
 }
