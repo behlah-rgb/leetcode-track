@@ -1,31 +1,25 @@
 class Solution {
     public List<Integer> majorityElement(int[] nums) {
-        int threshold = nums.length / 3;
-        List<Integer> ans = new ArrayList<>(2);
+        int c1 = 0, c2 = 0, e1 = 0, e2 = 1; // e1 != e2
 
-        int cnt1 = 0, cnt2 = 0;
-        int el1 = Integer.MIN_VALUE, el2 = Integer.MIN_VALUE;
-        for (int i = 0; i < nums.length; i++) {
-            if (cnt1 == 0 && el2 != nums[i]) {
-                cnt1 = 1; el1 = nums[i];
-            } else if (cnt2 == 0 && el1 != nums[i]) {
-                cnt2 = 1; el2 = nums[i];
-            } else if (el1 == nums[i]) cnt1++;
-            else if (el2 == nums[i]) cnt2++;
-            else {
-                cnt1--; cnt2--;
-            }
-        }
-        // manual checking
-        cnt1 = 0; cnt2 = 0;
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] == el1) cnt1++;
-            else if (nums[i] == el2) cnt2++;
+        for (int n : nums) {
+            if (n == e1) c1++;
+            else if (n == e2) c2++;
+            else if (c1 == 0) { e1 = n; c1 = 1; }
+            else if (c2 == 0) { e2 = n; c2 = 1; }
+            else { c1--; c2--; }
         }
 
-        if (cnt1 > threshold) ans.add(el1);
-        if (cnt2 > threshold) ans.add(el2);
+        c1 = c2 = 0;
+        for (int n : nums) {
+            if (n == e1) c1++;
+            else if (n == e2) c2++;
+        }
 
+        List<Integer> ans = new ArrayList<>();
+        int t = nums.length / 3;
+        if (c1 > t) ans.add(e1);
+        if (c2 > t) ans.add(e2);
         return ans;
     }
 }
